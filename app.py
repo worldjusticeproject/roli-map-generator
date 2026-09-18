@@ -1,4 +1,5 @@
 import io
+import base64
 import pandas as pd
 import numpy as np
 import geopandas as gpd
@@ -12,12 +13,24 @@ from src.utils.data_adds import variable_labels, bbox_coords
 
 st.set_page_config(
     page_title = "Map Generator",
-    page_icon  = ":earth_americas:"
+    page_icon  = ":earth_americas:",
+    layout     = "wide"
 )
 
 with open("styles.css") as stl:
-    st.markdown(f"<style>{stl.read()}</style>", 
+    st.markdown(f"<style>{stl.read()}</style>",
                 unsafe_allow_html=True)
+
+def step_header(number, title):
+    st.markdown(
+        f"""
+        <div class="step-header">
+            <span class="step-number">{number}</span>
+            <span class="step-title">{title}</span>
+        </div>
+        """,
+        unsafe_allow_html = True
+    )
 
 @st.cache_data
 def load_data():
@@ -32,45 +45,54 @@ def load_data():
 master_data = load_data()
 
 
-st.title("ROLI Map Generator")
+with open("Media/wjp-logo-full-dark.svg", "rb") as logo_file:
+    logo_b64 = base64.b64encode(logo_file.read()).decode()
+
+st.markdown(
+    f"""
+    <div class="wjp-hero">
+        <img src="data:image/svg+xml;base64,{logo_b64}" alt="World Justice Project"/>
+        <div class="wjp-hero-text">
+            <h1>ROLI Map Generator</h1>
+            <p>Draw choropleth maps, tables, and bar charts from the WJP Rule of Law Index.</p>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html = True
+)
 
 st.markdown(
     """
     <p class='jtext'>
-    This is an interactive app designed to display and generate 
+    This is an interactive app designed to display and generate
     <a href="https://datavizcatalogue.com/methods/choropleth.html">
-    <b style="color:#003249">Choropleth Maps</b></a> using the WJP's <i>Rule of Law Index</i> 
-    scores as data inputs. This app is still under development. However, the data presented in 
-    this app is up-to-date according to the latest datasets published by the World Justice 
+    <b style="color:#400099">Choropleth Maps</b></a> using the WJP's <i>Rule of Law Index</i>
+    scores as data inputs. This app is still under development. However, the data presented in
+    this app is up-to-date according to the latest datasets published by the World Justice
     Project in its website.
     </p>
 
     <p class='jtext'>
-    If you have questions, suggestions or you want to report a bug, you can send an email to 
-    <b style="color:#003249">carlos.toruno@gmail.com</b>. The Python code for this app
-    is publicly available on <a href="https://github.com/ctoruno/ROLI-Map-App" target="_blank" 
-    style="color:#003249"> this GitHub repository</a>.
+    If you have questions, suggestions or you want to report a bug, you can send an email to
+    <b style="color:#400099">daguirresalamanca@worldjusticeproject.org</b>. The Python code for this app
+    is publicly available on <a href="https://github.com/worldjusticeproject/roli-map-generator" target="_blank"
+    style="color:#400099"> this GitHub repository</a>.
     </p>
     """,
     unsafe_allow_html = True
 )
 
-st.markdown("""---""")
-
 # MAP EXTENSION CONTAINER
-extension_container = st.container()
+extension_container = st.container(border=True, key="card-extension")
 with extension_container:
 
-    st.markdown(
-        "<h4>Step 1: Define the geographical extension of your map.</h4>",
-        unsafe_allow_html = True
-    )
+    step_header(1, "Define the geographical extension of your map")
     st.markdown(
         """
-        <p class='jtext'>
-        The extension refers to the geographical coverage of your desired map. 
+        <p class='step-desc'>
+        The extension refers to the geographical coverage of your desired map.
         It can be a world or regional map. For regional maps, you can select from
-        a predefined list of options or you can customize the extension using 
+        a predefined list of options or you can customize the extension using
         geographical coordinates in order to define a bounding box for your map.
         </p>
         """,
@@ -231,19 +253,14 @@ with extension_container:
         regfilter        = None
         opac             = False
 
-st.markdown("""---""")
-
 # DATA OPTIONS CONTAINER
-data_container = st.container()
+data_container = st.container(border=True, key="card-data")
 with data_container:
 
-    st.markdown(
-        "<h4>Step 2: Select the scores that you would like to display in your map</h4>",
-        unsafe_allow_html = True
-    )
+    step_header(2, "Select the scores you would like to display")
     st.markdown(
         """
-        <p class='jtext'>
+        <p class='step-desc'>
         If you would like to display scores from the Rule of Law Index, you can select
         a variable from a specific year in the dropdown lists below. Additionally,
         the app allows you to upload your own custom data to use in the map.
@@ -397,19 +414,14 @@ with data_container:
                 b = f"From {y:.2f} to {bin_edges[x+1]:.2f}"
                 bin_labels.append(b)
 
-st.markdown("""---""")
-
 # CUSTOMIZATION OPTIONS CONTAINER
-customization = st.container()
+customization = st.container(border=True, key="card-customization")
 with customization:
 
-    st.markdown(
-        "<h4>Step 3: Customize your map</h4>",
-        unsafe_allow_html = True
-    )
+    step_header(3, "Customize your map")
     st.markdown(
         """
-        <p class='jtext'>
+        <p class='step-desc'>
         You can customize your map by customizing your color gradient, removing the color bar,
         adjusting the output dimensions, the DPI and the border widths.
         </p>
@@ -419,19 +431,19 @@ with customization:
 
     if not delta_bin:
         default_colors = [
-            ["#578e7f"],
-            ["#E51328", "#578e7f"],
-            ["#E51328", "#ccc555", "#578e7f"],
-            ["#E51328", "#f2a241", "#ccc555", "#578e7f"],
-            ["#E51328", "#f2a241", "#ccc555", "#578e7f", "#012d28"],
-            ["#D40276", "#E51328", "#f2a241", "#ccc555", "#578e7f", "#012d28"],
-            ["#D40276", "#E51328", "#f2a241", "#ffffff", "#ccc555", "#578e7f", "#012d28"]
+            ["#578E7F"],
+            ["#E10F3C", "#578E7F"],
+            ["#E10F3C", "#CCC555", "#578E7F"],
+            ["#E10F3C", "#F2A241", "#CCC555", "#578E7F"],
+            ["#E10F3C", "#F2A241", "#CCC555", "#578E7F", "#28594F"],
+            ["#D40276", "#E10F3C", "#F2A241", "#CCC555", "#578E7F", "#28594F"],
+            ["#D40276", "#E10F3C", "#F2A241", "#ffffff", "#CCC555", "#578E7F", "#28594F"]
         ]
     else:
         default_colors = [
-            ["#C41229", "#0559D4"],
-            ["#C41229", "#EB6975", "#69A2FF", "#0559D4"],
-            ["#C41229", "#EB6975", "#FEBECC", "#B2D3FF", "#69A2FF", "#0559D4"]
+            ["#C41229", "#181878"],
+            ["#C41229", "#EB6975", "#7272BC", "#181878"],
+            ["#C41229", "#EB6975", "#FEBECC", "#CCCCFF", "#7272BC", "#181878"]
         ]
 
     color_breaks = []
@@ -490,32 +502,27 @@ with customization:
             help = "The map has a resolution of 72 PPI"
         )
 
-st.markdown("""---""")
-
 # OUTPUT CONTAINER
-output = st.container()
+output = st.container(border=True, key="card-output")
     
 with output:
-    st.markdown(
-        "<h4>Step 4: Draw your map</h4>",
-        unsafe_allow_html = True
-    )
+    step_header(4, "Draw your map")
     st.markdown(
         """
-        <p class='jtext'>
-        You can now click on the <b>Display button</b> to visualize the outcomes 
+        <p class='step-desc'>
+        You can now click on the <b>Display button</b> to visualize the outcomes
         with the current settings. Once you do it, you will observe three tabs.
-        
+
         <ul>
         <li>
-        In the <i>first tab</i>, you can visualize the map. If you need to zoom into 
+        In the <i>first tab</i>, you can visualize the map. If you need to zoom into
         the image, you can enlarge the outcome by hovering near the top right corner
-        of the image and clicking the <b>enlarge button</b>. If you like the visual, 
+        of the image and clicking the <b>enlarge button</b>. If you like the visual,
         you can click on the <b>Save map button</b> to save the image as an SVG file.
         </li>
 
         <li>
-        In the <i>second tab</i>, the app produces a table with the respective scores 
+        In the <i>second tab</i>, the app produces a table with the respective scores
         and color codes by country. You also have the option to download this table
         as an excel file.
         </li>
@@ -536,7 +543,7 @@ with output:
             st.error("Please upload a file to continue", icon = "🚨")
             submit_button = False
     else:
-        submit_button = st.button(label = "Display")
+        submit_button = st.button(label = "Display", type = "primary")
 
 
 # BACKEND OPERATIONS

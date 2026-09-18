@@ -105,10 +105,5 @@ simplified_gdf_100m.plot(color     = "orange",
 plt.title('Simplified geometries: Precision 100m')
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')
-plt.savefig(path4saving + "/Simplified files/boundaries100m.png", 
+plt.savefig(path4saving + "/Simplified files/boundaries100m.png",
             dpi=300, bbox_inches='tight')
-
-
-
-
-boundaries = gpd.read_file("/Users/ctoruno/Documents/WJP_boundaries_10.json")

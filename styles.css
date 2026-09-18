@@ -1,62 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter Tight', 'Open Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Layout */
+
+.block-container,
+[data-testid="stMainBlockContainer"] {
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+}
+
+/* Hero band */
+
+.wjp-hero {
+    background: #400099;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.wjp-hero img {
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.wjp-hero-text h1 {
+    color: #ffffff;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem 0;
+    line-height: 1.2;
+}
+
+.wjp-hero-text p {
+    color: #d9c9f5;
+    font-size: 0.98rem;
+    margin: 0;
+    max-width: 640px;
+}
+
+/* Body copy */
+
 .jtext {
-    text-align: justify;
-    text-justify: auto;
-    color: #393B3B;
+    text-align: left;
+    color: #222221;
+    line-height: 1.55;
 }
 
 .vdesc {
-    text-align: justify;
-    text-justify: auto;
-    color: #393B3B;
+    text-align: left;
+    color: #666666;
     font-size: 14px;
+}
+
+.step-desc {
+    color: #666666;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+}
+
+/* Step headers -- numbering reflects the app's real 4-step sequence */
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.step-header .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    min-width: 1.9rem;
+    border-radius: 50%;
+    background: #400099;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.step-header .step-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #222221;
+}
+
+/* Step cards */
+
+div[class*="st-key-card-"] {
+    background: #faf9fc;
+    border: 1px solid #e3ddf0 !important;
+    border-radius: 12px !important;
+    padding: 1.75rem 2rem !important;
+    margin-bottom: 1.75rem;
+}
+
+div[class*="st-key-card-"] .step-desc {
+    margin-bottom: 1.25rem;
 }
 
 #MainMenu {
     visibility: hidden;
 }
 
-#roli-map-generator{
-    text-align: center;
-}
-
 footer{
     visibility: hidden;
 }
 
-div .streamlit-expanderHeader p{
-    text-size-adjust: 100%;
-    font-size: calc(0.875rem + .15vw);
-    font-family: "Source Sans Pro", sans-serif;
-    font-weight: 600;
-    color: rgb(76, 76, 82);
-    line-height: 1.1;
-    box-sizing: border-box;
-    position: relative;
-    flex: 1 1 0%;
-}
+/* Widget labels */
 
 div .stNumberInput p, div .stSelectbox p{
     font-weight: bold;
 }
 
-
-button.css-8vredb.edgvbvh10{
-    border-width: 1.5px;
-    border-color: #393B3B;
-}
-
-button.css-8vredb.edgvbvh10 p{
-    font-weight: 600;
-}
-
+div .streamlit-expanderHeader p,
 div .css-gr0aio p{
     text-size-adjust: 100%;
     font-size: calc(0.875rem + .15vw);
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Inter Tight', 'Open Sans', system-ui, -apple-system, sans-serif;
     font-weight: 600;
-    color: rgb(76, 76, 82);
+    color: #400099;
     line-height: 1.1;
     box-sizing: border-box;
     position: relative;
     flex: 1 1 0%;
+}
+
+/* Buttons */
+
+.stButton > button, .stDownloadButton > button {
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1.5px solid #400099;
+    color: #400099;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.stButton > button:hover, .stDownloadButton > button:hover {
+    background-color: #400099;
+    color: #ffffff;
+    border-color: #400099;
+}
+
+.stButton > button[kind="primary"] {
+    background-color: #400099;
+    color: #ffffff;
+    border-color: #400099;
+}
+
+.stButton > button[kind="primary"]:hover {
+    background-color: #2e006e;
+    border-color: #2e006e;
+}
+
+/* Tabs (Map / Table / Graph) */
+
+button[data-baseweb="tab"] {
+    font-weight: 600;
+    color: #666666;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #400099 !important;
+}
+
+div[data-baseweb="tab-highlight"] {
+    background-color: #400099 !important;
 }
