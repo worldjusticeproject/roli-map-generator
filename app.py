@@ -721,11 +721,11 @@ if submit_button:
             outcome_table  = outcome_table.rename(
                 columns={
                     "country_pct_change": "country",
-                    "roli_pct_change": "roli"
+                    f"{target_variable}_pct_change": target_variable
                 }
             )
             outcome_table = outcome_table.drop(
-                columns = ["country_original", "roli_original", "code"]
+                columns = ["country_original", f"{target_variable}_original", "code"]
             )
 
         if not delta_bin:
@@ -740,7 +740,7 @@ if submit_button:
             outcome_table["color_code"] = (
                 outcome_table.apply(
                     lambda row: (
-                        colors.rgb2hex(plt.cm.get_cmap(cmap)(row[target_variable]))        
+                        colors.rgb2hex(cmap(row[target_variable]))        
                     ), 
                     axis = 1
                 )
@@ -761,7 +761,7 @@ if submit_button:
             outcome_table = outcome_table[outcome_table["WB_A3"].isin(highlighted_countries)]
 
         if delta_bin:
-            outcome_table = outcome_table.drop(columns=["roli"])
+            outcome_table = outcome_table.drop(columns=[target_variable])
             outcome_table["score"] = outcome_table["score"]*100
             outcome_table["change"] = outcome_table["change"]*100
         st.write(outcome_table)
